@@ -1,4 +1,5 @@
 
+
 document.getElementById('login-btn').addEventListener('click',function(){
 const inputNumber = document.getElementById("user-name");
 const number = inputNumber.value ;
@@ -9,7 +10,7 @@ const pin = inputPin.value;
 console.log(pin);
 if( number == 'admin' && pin == 'admin123'){
     alert('success');
-    window.location.assign("/github-issue.html")
+    window.location.assign("github-issue.html")
 }
 else alert("login failed");
 

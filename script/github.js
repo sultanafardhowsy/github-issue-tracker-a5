@@ -157,7 +157,7 @@ const displayAll = (issues) =>{
           </div>
           <hr style="height: 1px; background-color:gray; border: none;">
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
-          <p>2024-01-15</p>
+          <p>24</p>
 
   </div>
     `
