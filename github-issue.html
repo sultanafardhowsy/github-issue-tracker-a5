@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Issues</title>
+    <!-- daisyui+tailwind -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+<!-- icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
+integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    *{
+        font-family: "Outfit",sans-serif;
+    }
+
+</style>
+</head>
+<body>
+     <header>
+    <div class="navbar bg-base-100 shadow-sm ">
+  <div class="navbar-start">
+    
+    <div class=" flex justify-between gap-2 px-10">
+        <img class="w-[50px]" src="./assets/github-logo.png" alt="">
+       
+        <span class="text-lg font-bold pt-3">GitHub Issues Tracker</span>
+    </div>
+  </div>
+
+  <div class="search-container mx-5 flex justify-between gap-3">
+        <i class="fa fa-search icon"></i>
+        <input type="text" name="search" placeholder="Search..." class="search-input">
+        <button class="btn btn-primary h-7">+ New Issues</button>
+    </div>
+ 
+</div>
+   </header> 
+
+   <section>
+    <div class="w-11/12 mx-auto pt-5">
+        <button id="all-btn" onclick="activeButton('all-btn')" class="btn  btn-primary w-24">All</button>
+        <button id="open-btn" onclick="activeButton('open-btn')" class="btn btn-outline btn-primary w-24">Open</button>
+        <button id="closed-btn" onclick="activeButton('closed-btn')" class="btn btn-outline btn-primary w-24">Closed</button>
+    </div>
+   </section>
+
+   <section class="flex justify-start px-14 gap-4 py-10">
+    <div class="bg-slate-200 rounded-full w-12 h-12 relative  flex items-center justify-center overflow-hidden">
+        <img src="./assets/Aperture.png" alt=""class="w-8 h-8 object-cover">
+    </div>
+   <div>
+     <p>Issues</p>
+    <p>Track and manage your project issues</p>
+   </div>
+   </section>
+
+   <!-- "id": 1,
+"title": "Fix navigation menu on mobile devices",
+"description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
+"status": "open",
+"labels": [
+"bug",
+"help wanted"
+],
+"priority": "high",
+"author": "john_doe",
+"assignee": "jane_smith",
+"createdAt": "2024-01-15T10:30:00Z",
+"updatedAt": "2024-01-15T10:30:00Z" -->
+
+   <section id="issue-container" class="bg-gray-200 p-10 w-11/12 mx-auto my-10 grid grid-cols-3">
+  <div id="card-body" class="bg-white px-4 py-4">
+    <div class="flex justify-between">
+        <p>open</p>
+        <p class="font-bold">high</p>
+    </div>
+    <div>
+        <h2 class="text-2xl font-bold">Fix navigation menu on mobile devices</h2>
+    <p class="line-clamp-2">The navigation menu doesn't collapse
+         properly on mobile devices.
+          Need to fix the responsive behavior.</p>
+    </div>
+          <div>
+            bug help wanted
+          </div>
+          <p><span># 1</span>john_doe</p>
+          <p>2024-01-15</p>
+
+  </div>
+   </section>
+ <script src="script/github.js"></script>
+</body>
+</html>
