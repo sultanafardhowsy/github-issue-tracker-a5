@@ -10,7 +10,7 @@ const pin = inputPin.value;
 console.log(pin);
 if( number == 'admin' && pin == 'admin123'){
     alert('success');
-    window.location.assign("home.html")
+    window.location.assign("github-issue.html")
 }
 else alert("login failed");
 
