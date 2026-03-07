@@ -10,10 +10,12 @@ const closedbtn = document.getElementById("closed-btn");
 
 const createElements = (arr) =>{
     const creatHtml1 = arr.map((el) => `<span class="btn"> ${el} </span>`)
-    return(creatHtml1.join(""));
-    
+    return(creatHtml1.join(""));   
 }
 
+function calculatecount(){
+    total.innerText =  issueContainer.children.length}
+    calculatecount()
 
 function activeButton(id){
     console.log(id);
@@ -33,6 +35,7 @@ function activeButton(id){
     selected.classList.add('btn-primary')
 if(id == 'all-btn'){
     loadissue()
+    
 }else if(id=='open-btn'){
     issueContainer.innerHTML = "";
 displayopen()
@@ -87,6 +90,7 @@ const displayopen = () =>{
   </div>
     `
     issueContainer.appendChild(btnDiv);
+    calculatecount()
     
    }
    
@@ -115,6 +119,7 @@ for(let issue of closedIssue){
   </div>
     `
     issueContainer.appendChild(btnDiv);  
+    calculatecount()
 }
  }
     
@@ -162,7 +167,7 @@ const displayAll = (issues) =>{
   </div>
     `
     issueContainer.appendChild(btnDiv);
-    
+    calculatecount()
    }
    
 }

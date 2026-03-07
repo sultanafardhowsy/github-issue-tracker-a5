@@ -22,7 +22,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
      <header>
-    <div class="navbar bg-base-100 shadow-sm ">
+    <div class="navbar bg-base-100 shadow-sm w-full">
   <div class="navbar-start">
     
     <div class=" flex justify-between gap-2 px-10">
@@ -31,11 +31,28 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
         <span class="text-lg font-bold pt-3">GitHub Issues Tracker</span>
     </div>
   </div>
-
-  <div class="search-container mx-5 flex justify-between gap-3">
-        <i class="fa fa-search icon"></i>
-        <input type="text" name="search" placeholder="Search..." class="search-input">
-        <button class="btn btn-primary h-7">+ New Issues</button>
+<!-- search bar -->
+  <div class="search-container  flex justify-between gap-3">
+        <!-- <i class="fa fa-search icon"></i> -->
+       
+        <label class="input">
+  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <g
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      stroke-width="2.5"
+      fill="none"
+      stroke="currentColor"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </g>
+  </svg>
+  <input type="search" required placeholder="Search" />
+</label>
+        
+        <!-- <input type="text" name="search" placeholder="Search..." class="search-input"> -->
+        <button class="btn btn-primary h-10 ">+ New Issues</button>
     </div>
  
 </div>
@@ -49,13 +66,24 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     </div>
    </section>
 
-   <section class="flex justify-start px-14 gap-4 py-10">
-    <div class="bg-slate-200 rounded-full w-12 h-12 relative  flex items-center justify-center overflow-hidden">
+   <section class="flex justify-between px-14 gap-4 py-10">
+    <div class="flex justify-start gap-2">
+        <div class="bg-slate-200 rounded-full w-12 h-12 relative  flex items-center justify-center overflow-hidden">
         <img src="./assets/Aperture.png" alt=""class="w-8 h-8 object-cover">
     </div>
    <div>
-     <p>Issues</p>
+    <div class="flex flex-row gap-2">
+        <p id="total"class="text-2xl font-bold">total</p>
+     <p class="text-2xl font-bold">Issues</p>
+    </div>
     <p>Track and manage your project issues</p>
+   </div>
+    </div>
+   <div class="flex justify-end gap-3 pr-10">
+     <div class="bg-green-600 rounded-full w-5 h-5 flex items-center justify-center overflow-hidden"></div>
+     <p>Open</p>
+     <div class="bg-violet-600 rounded-full w-5 h-5 flex items-center justify-center overflow-hidden"></div>
+     <p>Closed</p>
    </div>
    </section>
 
