@@ -8,14 +8,24 @@ const closedbtn = document.getElementById("closed-btn");
  let openIssue = [];
  let closedIssue =[];
 
-const createElements = (arr) =>{
-    const creatHtml1 = arr.map((el) => `<span class="btn"> ${el} </span>`)
-   const value = creatHtml1.join("")
+// const createElements = (arr) =>{
+//     const creatHtml1 = arr.map((el) => `<span class="btn"> ${el} </span>`)
+//    const value = creatHtml1.join("")
+//    return(value)  
+// }
 
-   return(value)  
-}
+const createElements = (arr) => {
+    const creatHtml1 = arr.map((el) => {
+        // Simple color mapping
+        let color = el === 'bug' ? '#00FFFF' : el =='help wanted'?'#D3D3D3': el =='enhancement'?'#ccccff':'pink';
+        
+        return `<span class="btn" style="background-color: ${color}; color: black;"> ${el} </span>`;
+    });
+    return creatHtml1.join("");
+};
+
+// date function
 const dateupdated =(date) =>{
-    
       var d = '12/12/1955 12:00:00 AM'
 d = d.split(' ')[0]
 return(d)
@@ -25,16 +35,15 @@ function calculatecount(){
     total.innerText =  issueContainer.children.length}
     calculatecount()
 
-    const manageSpinner = (status) =>{
-    if(status == true){
-        document.getElementById("loading").classList.remove("hidden");
-        document.getElementById("issue-container").classList.add("hidden");
-    } else{
-        document.getElementById("issue-container").classList.remove("hidden");
-        document.getElementById("loading").classList.add("hidden");
-    }
+function showLoading() {
+  loading.classList.remove("hidden");
+  issueContainer.innerHTML = "";
 }
-manageSpinner()
+function hideLoading() {
+  loading.classList.add("hidden");
+}
+
+
 
 function activeButton(id){
     console.log(id);
@@ -70,10 +79,11 @@ issueContainer.innerHTML = "";
 
 
 const loadissue = () => {
-   // manageSpinner(true)
+   showLoading()
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
     .then((json) => displayIssues(json.data))
+    hideLoading()
 }
 const displayIssues = (issue) =>{
     
@@ -86,26 +96,36 @@ const displayIssues = (issue) =>{
 }
 
 const displayopen = () =>{
-    manageSpinner()
+  
     opencontainer.innerHTML="";
     for(let issue of openIssue){
         const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body" class="bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4">
-    <div class="flex justify-between">
+    <div id="card-body" class="bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-green-500 space-y-4">
+    <div class="h-[80%] border-b-3 border-b-gray-400 py-3">
+    <div class="flex justify-between w-full">
         <p class="">${issue.status}</p>
-        <p class="font-bold">${issue.priority}</p>
+         <p class="font-bold w-20 rounded-lg text-center ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
-    <div>
+    <div class="w-full">
         <h2 class="text-2xl font-bold">${issue.title}</h2>
     <p class="line-clamp-2">${issue.description}</p>
     </div>
           <div>
             ${createElements(issue.labels)}
           </div>
-          <hr style="height: 1px; background-color:gray; border: none;">
+          </div>
+      
+          <div class="flex justify-between">
+          <div>
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
-          <p>${dateupdated(issue.updatedAt)}</p>
+          <p>${dateupdated(issue.createdAt)}</p>
+          </div>
+          <div>
+          <p>Updated At</p>
+           <p>${dateupdated(issue.updatedAt)}</p>
+           </div>
+            </div
 
   </div>
     `
@@ -116,32 +136,42 @@ const displayopen = () =>{
    
 }
  const displayClosed = () =>{
-    manageSpinner()
+    showLoading()
 closedcontainer.innerHTML = "";
 for(let issue of closedIssue){
    const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body" class="bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4">
-    <div class="flex justify-between">
+    <div id="card-body" class="card bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-violet-600 space-y-4">
+   <div class="h-[100%] border-b-3 border-b-gray-400 py-3">
+    <div class="flex justify-between w-full">
         <p class="">${issue.status}</p>
-        <p class="font-bold">${issue.priority}</p>
+        <p class="font-bold w-20 rounded-lg text-center ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
-    <div>
+    <div class="w-full">
         <h2 class="text-2xl font-bold">${issue.title}</h2>
     <p class="line-clamp-2">${issue.description}</p>
     </div>
           <div>
             ${createElements(issue.labels)}
           </div>
-          <hr style="height: 1px; background-color:gray; border: none;">
+          </div>
+      
+          <div class="flex justify-between">
+          <div>
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
-          <p>${dateupdated(issue.updatedAt)}</p>
-
+          <p>${dateupdated(issue.createdAt)}</p>
+          </div>
+          <div>
+          <p>Updated At</p>
+           <p>${dateupdated(issue.updatedAt)}</p>
+           </div>
+            </div
 
   </div>
     `
     issueContainer.appendChild(btnDiv);  
     calculatecount()
+    hideLoading()
 }
  }
     
@@ -149,7 +179,7 @@ for(let issue of closedIssue){
 
 
 const displayAll = (issues) =>{
-    manageSpinner()
+    
 //    const issueContainer = document.getElementById("issue-container");
    issueContainer.innerHTML = "";
 
@@ -171,20 +201,22 @@ const displayAll = (issues) =>{
     
     const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body" class="bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4">
-    <div class="flex justify-between">
+    <div id="card-body" class="${issue.status === 'open'? 'border-t-4 border-t-green-500' : 'border-t-4 border-t-violet-600'} bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4  space-y-4">
+    <div class="h-[80%] border-b-3 border-b-gray-400 py-3">
+    <div class="flex justify-between w-full">
         <p class="">${issue.status}</p>
-        <p class="font-bold">${issue.priority} </p>
+        <p class="font-bold w-20 rounded-lg text-center ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
-    <div>
+    <div class="w-full">
         <h2 class="text-2xl font-bold">${issue.title}</h2>
     <p class="line-clamp-2">${issue.description}</p>
     </div>
-          <div>
+          <div >
             ${createElements(issue.labels)}
+        </div>
           </div>
-          <hr style="height: 1px; background-color:gray; border: none;">
-         <div class="flex justify-between">
+      
+          <div class="flex justify-between">
           <div>
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
           <p>${dateupdated(issue.createdAt)}</p>
@@ -194,11 +226,16 @@ const displayAll = (issues) =>{
            <p>${dateupdated(issue.updatedAt)}</p>
            </div>
             </div
- 
+
   </div>
     `
+  
    // onclick =document.getElementById("my_modal_5").showModal();
+    
+    
+
     issueContainer.appendChild(btnDiv);
+   
     calculatecount()
    }
    
