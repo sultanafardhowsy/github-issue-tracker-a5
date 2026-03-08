@@ -10,12 +10,31 @@ const closedbtn = document.getElementById("closed-btn");
 
 const createElements = (arr) =>{
     const creatHtml1 = arr.map((el) => `<span class="btn"> ${el} </span>`)
-    return(creatHtml1.join(""));   
+   const value = creatHtml1.join("")
+
+   return(value)  
+}
+const dateupdated =(date) =>{
+    
+      var d = '12/12/1955 12:00:00 AM'
+d = d.split(' ')[0]
+return(d)
 }
 
 function calculatecount(){
     total.innerText =  issueContainer.children.length}
     calculatecount()
+
+    const manageSpinner = (status) =>{
+    if(status == true){
+        document.getElementById("loading").classList.remove("hidden");
+        document.getElementById("issue-container").classList.add("hidden");
+    } else{
+        document.getElementById("issue-container").classList.remove("hidden");
+        document.getElementById("loading").classList.add("hidden");
+    }
+}
+manageSpinner()
 
 function activeButton(id){
     console.log(id);
@@ -42,7 +61,7 @@ displayopen()
 }
 else if(id='closed-btn') {
 issueContainer.innerHTML = "";
-    displayClosed()
+ displayClosed()  
 }
     
     
@@ -60,13 +79,14 @@ const displayIssues = (issue) =>{
     
     displayAll(issue);
      openIssue = issue.filter(item => item.status === 'open');
-    console.log(openIssue);
+   // console.log(openIssue);
  closedIssue = issue.filter(item => item.status === 'closed');
-console.log(closedIssue);
+//console.log(closedIssue);
     
 }
 
 const displayopen = () =>{
+    manageSpinner()
     opencontainer.innerHTML="";
     for(let issue of openIssue){
         const btnDiv = document.createElement("div")
@@ -85,7 +105,7 @@ const displayopen = () =>{
           </div>
           <hr style="height: 1px; background-color:gray; border: none;">
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
-          <p>2024-01-15</p>
+          <p>${dateupdated(issue.updatedAt)}</p>
 
   </div>
     `
@@ -96,6 +116,7 @@ const displayopen = () =>{
    
 }
  const displayClosed = () =>{
+    manageSpinner()
 closedcontainer.innerHTML = "";
 for(let issue of closedIssue){
    const btnDiv = document.createElement("div")
@@ -114,7 +135,8 @@ for(let issue of closedIssue){
           </div>
           <hr style="height: 1px; background-color:gray; border: none;">
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
-          <p>2024-01-15</p>
+          <p>${dateupdated(issue.updatedAt)}</p>
+
 
   </div>
     `
@@ -127,6 +149,7 @@ for(let issue of closedIssue){
 
 
 const displayAll = (issues) =>{
+    manageSpinner()
 //    const issueContainer = document.getElementById("issue-container");
    issueContainer.innerHTML = "";
 
@@ -151,7 +174,7 @@ const displayAll = (issues) =>{
     <div id="card-body" class="bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4">
     <div class="flex justify-between">
         <p class="">${issue.status}</p>
-        <p class="font-bold">${issue.priority}</p>
+        <p class="font-bold">${issue.priority} </p>
     </div>
     <div>
         <h2 class="text-2xl font-bold">${issue.title}</h2>
@@ -161,11 +184,20 @@ const displayAll = (issues) =>{
             ${createElements(issue.labels)}
           </div>
           <hr style="height: 1px; background-color:gray; border: none;">
+         <div class="flex justify-between">
+          <div>
           <p class="mr-4"><span class="gap-2"># ${issue.id} by </span>${issue.author}</p>
-          <p>24</p>
-
+          <p>${dateupdated(issue.createdAt)}</p>
+          </div>
+          <div>
+          <p>Updated At</p>
+           <p>${dateupdated(issue.updatedAt)}</p>
+           </div>
+            </div
+ 
   </div>
     `
+   // onclick =document.getElementById("my_modal_5").showModal();
     issueContainer.appendChild(btnDiv);
     calculatecount()
    }
@@ -175,4 +207,20 @@ const displayAll = (issues) =>{
 
 loadissue()
 
+
+
+document.getElementById("btn-search").addEventListener('click',() =>{
+const input = document.getElementById("search-box");
+const searchValue = input.value.trim().toLowerCase();
+console.log(searchValue);
+fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+.then((res) => res.json())
+.then((data) =>{
+const searchWord = data.data;
+console.log(searchWord);
+displayAll(searchWord)
+calculatecount()
+})
+
+})
 
