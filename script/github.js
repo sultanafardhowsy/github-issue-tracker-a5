@@ -5,6 +5,7 @@ const closedbtn = document.getElementById("closed-btn");
  const issueContainer = document.getElementById("issue-container");
  const opencontainer = document.getElementById("openContainer")
  const closedcontainer = document.getElementById("closedContainer");
+ const myModal = document.getElementById("my_modal");
  let openIssue = [];
  let closedIssue =[];
 
@@ -17,7 +18,7 @@ const closedbtn = document.getElementById("closed-btn");
 const createElements = (arr) => {
     const creatHtml1 = arr.map((el) => {
         // Simple color mapping
-        let color = el === 'bug' ? '#00FFFF' : el =='help wanted'?'#D3D3D3': el =='enhancement'?'#ccccff':'pink';
+        let color = el === 'bug' ? '#00FFFF' : el =='help wanted'?'#D3D4D4': el =='enhancement'?'#ccccff':'pink';
         
         return `<span class="btn" style="background-color: ${color}; color: black;"> ${el} </span>`;
     });
@@ -42,8 +43,6 @@ function showLoading() {
 function hideLoading() {
   loading.classList.add("hidden");
 }
-
-
 
 function activeButton(id){
     console.log(id);
@@ -101,10 +100,10 @@ const displayopen = () =>{
     for(let issue of openIssue){
         const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body" class="bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-green-500 space-y-4">
-    <div class="h-[80%] border-b-3 border-b-gray-400 py-3">
+    <div id="card-body"  class=" bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-green-500 space-y-4">
+    <div class="h-[80%] border-b-3 border-b-gray-400 py-1">
     <div class="flex justify-between w-full">
-        <p class="">${issue.status}</p>
+         <p class="pb-4">${issue.status === 'open'?'<img src="./assets/Open-Status.png">':'<img src ="./assets/Closed- Status .png">'}</p>
          <p class="font-bold w-20 rounded-lg text-center ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
     <div class="w-full">
@@ -144,7 +143,7 @@ for(let issue of closedIssue){
     <div id="card-body" class="card bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-violet-600 space-y-4">
    <div class="h-[100%] border-b-3 border-b-gray-400 py-3">
     <div class="flex justify-between w-full">
-        <p class="">${issue.status}</p>
+        <p class="pb-4">${issue.status === 'open'?'<img src="./assets/Open-Status.png">':'<img src ="./assets/Closed- Status .png">'}</p>
         <p class="font-bold w-20 rounded-lg text-center ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
     <div class="w-full">
@@ -201,13 +200,14 @@ const displayAll = (issues) =>{
     
     const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body" class="${issue.status === 'open'? 'border-t-4 border-t-green-500' : 'border-t-4 border-t-violet-600'} bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4  space-y-4">
+    <div id="card-body"  class="${issue.status === 'open'? 'border-t-4 border-t-green-500' : 'border-t-4 border-t-violet-600'} bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4  space-y-4">
     <div class="h-[80%] border-b-3 border-b-gray-400 py-3">
     <div class="flex justify-between w-full">
-        <p class="">${issue.status}</p>
-        <p class="font-bold w-20 rounded-lg text-center ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
+        <p class="pb-4">${issue.status === 'open'?'<img src="./assets/Open-Status.png">':'<img src ="./assets/Closed- Status .png">'}</p>
+        
+        <p class="font-bold w-20 rounded-lg text-center mb-4 ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
-    <div class="w-full">
+    <div class="w-full h-28 pb-2">
         <h2 class="text-2xl font-bold">${issue.title}</h2>
     <p class="line-clamp-2">${issue.description}</p>
     </div>
@@ -229,9 +229,7 @@ const displayAll = (issues) =>{
 
   </div>
     `
-  
-   // onclick =document.getElementById("my_modal_5").showModal();
-    
+
     
 
     issueContainer.appendChild(btnDiv);
@@ -260,4 +258,8 @@ calculatecount()
 })
 
 })
+
+function showModalIssue(id){
+    myModal.showModal()
+}
 
