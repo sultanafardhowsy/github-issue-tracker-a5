@@ -44,6 +44,11 @@ function hideLoading() {
   loading.classList.add("hidden");
 }
 
+function showModalIssue(id){
+
+    myModal.showModal()
+}
+
 function activeButton(id){
     console.log(id);
     //remove btn-primary from all
@@ -95,12 +100,12 @@ const displayIssues = (issue) =>{
 }
 
 const displayopen = () =>{
-  
+ 
     opencontainer.innerHTML="";
     for(let issue of openIssue){
         const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body"  class=" bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-green-500 space-y-4">
+    <div id="card-body"  onclick="showTextDetails(${issue.id})" class=" bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-green-500 space-y-4">
     <div class="h-[80%] border-b-3 border-b-gray-400 py-1">
     <div class="flex justify-between w-full">
          <p class="pb-4">${issue.status === 'open'?'<img src="./assets/Open-Status.png">':'<img src ="./assets/Closed- Status .png">'}</p>
@@ -135,12 +140,12 @@ const displayopen = () =>{
    
 }
  const displayClosed = () =>{
-    showLoading()
+    
 closedcontainer.innerHTML = "";
 for(let issue of closedIssue){
    const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body" class="card bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-violet-600 space-y-4">
+    <div id="card-body"  onclick="showTextDetails(${issue.id})" class="card bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm border-t-4 border-t-violet-600 space-y-4">
    <div class="h-[100%] border-b-3 border-b-gray-400 py-3">
     <div class="flex justify-between w-full">
         <p class="pb-4">${issue.status === 'open'?'<img src="./assets/Open-Status.png">':'<img src ="./assets/Closed- Status .png">'}</p>
@@ -170,7 +175,7 @@ for(let issue of closedIssue){
     `
     issueContainer.appendChild(btnDiv);  
     calculatecount()
-    hideLoading()
+    
 }
  }
     
@@ -200,7 +205,7 @@ const displayAll = (issues) =>{
     
     const btnDiv = document.createElement("div")
     btnDiv.innerHTML = `
-    <div id="card-body"  class="${issue.status === 'open'? 'border-t-4 border-t-green-500' : 'border-t-4 border-t-violet-600'} bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4  space-y-4">
+    <div id="card-body" onclick="showTextDetails(${issue.id})" class="${issue.status === 'open'? 'border-t-4 border-t-green-500' : 'border-t-4 border-t-violet-600'} bg-white  h-[100%] px-4 py-4 rounded-xl shadow-sm space-y-4  space-y-4">
     <div class="h-[80%] border-b-3 border-b-gray-400 py-3">
     <div class="flex justify-between w-full">
         <p class="pb-4">${issue.status === 'open'?'<img src="./assets/Open-Status.png">':'<img src ="./assets/Closed- Status .png">'}</p>
@@ -208,7 +213,7 @@ const displayAll = (issues) =>{
         <p class="font-bold w-20 rounded-lg text-center mb-4 ${issue.priority === 'high'? 'bg-red-300':issue.priority === 'medium'?'bg-yellow-200':'bg-slate-300'}">${issue.priority}</p>
     </div>
     <div class="w-full h-28 pb-2">
-        <h2 class="text-2xl font-bold">${issue.title}</h2>
+        <h2 class="text-2xl font-bold" >${issue.title}</h2>
     <p class="line-clamp-2">${issue.description}</p>
     </div>
           <div >
@@ -233,7 +238,7 @@ const displayAll = (issues) =>{
     
 
     issueContainer.appendChild(btnDiv);
-   
+    
     calculatecount()
    }
    
@@ -259,7 +264,66 @@ calculatecount()
 
 })
 
-function showModalIssue(id){
-    myModal.showModal()
+const showTextDetails = async(id) =>{
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
+    console.log(url)
+    const res = await fetch(url)
+    const details = await res.json()
+    console.log(details);
+    
+    displayDetails(details.data);
+
 }
 
+// id": 33,
+// "title": "Add bulk operations support",
+// "description": "Allow users to perform bulk actions like delete, update status on multiple items at once.",
+// "status": "open",
+// "labels": [
+// "enhancement"
+// ],
+// "priority": "low",
+// "author": "bulk_barry",
+// "assignee": "",
+// "createdAt": "2024-02-02T10:00:00Z",
+// "updatedAt": "2024-02-02T10:00:00Z"
+
+const displayDetails =(word) => {
+console.log(word);
+const detailsBox = document.getElementById("detailscontainer");
+detailsBox.innerHTML = `
+     
+       <div>
+        <h1 class="text-2xl font-bold">${word.title}</h1>
+        <div class="flex flex-row gap-3">
+          <p class="bg-green-600 text-white rounded-full px-4 py-1">${word.status}</p>
+          <div class="bg-black rounded-full w-2 h-2 flex items-center justify-center overflow-hidden mt-2"></div>
+          <p>opened by ${word.author}</p>
+          <div class="bg-black rounded-full w-2 h-2 flex items-center justify-center overflow-hidden mt-2"></div>
+          <p>${dateupdated(word.updatedAt)} </p>
+        </div>
+        <p> ${createElements(word.labels)}</p>
+        <p>${word.description}</p>
+      </div>
+      <div class="flex justify-between" >
+        <div class="flex flex-col">
+        <p>Assigne</p>
+        <p class="text-1xl font-bold">${word.assignee}</p>
+      </div>
+      <div class="flex flex-col">
+        <p>priority:</p>
+        <p class="bg-orange-500 text-white rounded-full px-4 py-1">${word.priority}</p>
+      </div>
+      <div></div>
+      </div>
+    </div>
+    <div id="modalContainer"></div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-primary">Close</button>
+      </form>
+    </div>
+    </div>`
+document.getElementById("my_modal").showModal();
+}
