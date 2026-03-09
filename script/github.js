@@ -83,11 +83,13 @@ issueContainer.innerHTML = "";
 
 
 const loadissue = () => {
-   showLoading()
+    showLoading(); 
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
-    .then((json) => displayIssues(json.data))
-    hideLoading()
+    .then((json) => {
+        displayIssues(json.data);
+        hideLoading(); 
+    });
 }
 const displayIssues = (issue) =>{
     
@@ -249,30 +251,37 @@ loadissue()
 
 
 
-document.getElementById("btn-search").addEventListener('click',() =>{
+document.getElementById("btn-search").addEventListener('click', () => {
+
 const input = document.getElementById("search-box");
 const searchValue = input.value.trim().toLowerCase();
-console.log(searchValue);
+
+showLoading();
+
 fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
 .then((res) => res.json())
-.then((data) =>{
-const searchWord = data.data;
-console.log(searchWord);
-displayAll(searchWord)
-calculatecount()
+.then((data) => {
+    const searchWord = data.data;
+
+    displayAll(searchWord);
+    calculatecount();
+
+    hideLoading(); // loading hide
 })
 
 })
 
-const showTextDetails = async(id) =>{
+const showTextDetails = async(id) => {
+
+    showLoading();
+
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
-    console.log(url)
     const res = await fetch(url)
     const details = await res.json()
-    console.log(details);
-    
+
     displayDetails(details.data);
 
+    hideLoading();
 }
 
 // id": 33,
