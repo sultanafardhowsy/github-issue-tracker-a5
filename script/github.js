@@ -256,7 +256,7 @@ document.getElementById("btn-search").addEventListener('click', () => {
 const input = document.getElementById("search-box");
 const searchValue = input.value.trim().toLowerCase();
 
-showLoading();
+
 
 fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
 .then((res) => res.json())
@@ -266,14 +266,14 @@ fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValu
     displayAll(searchWord);
     calculatecount();
 
-    hideLoading(); // loading hide
+   
 })
 
 })
 
 const showTextDetails = async(id) => {
 
-    showLoading();
+   
 
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
     const res = await fetch(url)
@@ -281,7 +281,7 @@ const showTextDetails = async(id) => {
 
     displayDetails(details.data);
 
-    hideLoading();
+   
 }
 
 // id": 33,
