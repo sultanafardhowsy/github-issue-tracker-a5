@@ -34,29 +34,21 @@ This project helped me strengthen my skills in:
 
 ---
 
-## 🌱 Future Improvements
+## 📦 Dependencies
 
-- Add authentication (GitHub OAuth)  
-- Issue filtering & sorting  
-- Dark mode support  
-- Better state management  
+This project uses CDN-based setup, so no installation is required:
 
----
-
-## 🙌 Feedback
-
-I’m continuously learning and improving — feedback and suggestions are always welcome!
-
-👉 Feel free to check it out and share your thoughts!
+- Tailwind CSS (CDN)  
+- JavaScript (Vanilla)  
+- GitHub API (for fetching issues)
 
 ---
 
-## 📢 Connect With Me
+## 🖥️ Run Locally
 
-📧 Email: [sfardhowsy@gmail.com](mailto:sfardhowsy@gmail.com)
+Follow these steps to run the project on your local machine:
 
----
+### 📥 Step 1: Clone the Repository
 
-## 🏷️ Tags
-
-`#WebDevelopment` `#JavaScript` `#TailwindCSS` `#HTML` `#FrontendDevelopment` `#GitHub` `#Projects` `#LearningJourney`
+```bash
+git clone https://github.com/sultanafardhowsy/github-issue-tracker-a5.git
